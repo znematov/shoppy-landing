@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shoppy для магазина</title>
+<meta name="description" content="Shoppy — приложение для небольшого магазина: тетрадь долгов (насия) и список закупок в телефоне. Без кассы, склада и отчётов. Работает без интернета.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shoppy — две тетради вашего магазина в телефоне">
+<meta property="og:description" content="Тетрадь долгов и список закупок. Без кассы, склада и отчётов. Работает без интернета. Открывается в браузере телефона.">
+<meta property="og:url" content="https://znematov.github.io/shoppy-landing/">
+<!-- Link previews need a full address here; change it if the site moves to its own domain. -->
+<meta property="og:image" content="https://znematov.github.io/shoppy-landing/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<!--
+THESIS: Shoppy wins by refusing. The page opens with what the app will not do and keeps only the two notebooks; it refuses the hero-plus-feature-cards arrangement every app landing ships.
+OWN-WORLD: the app's own world. #FAFAFA paper, #111 ink, one lime ring (#A6C23F) as the only colour, Onest 800 for display, hairline rules like notebook lines, a struck-out word as the signature mark, phones in ink frames.
+STORY: an owner recognises the two paper notebooks, understands that nothing else moves into the phone, sees the real screens, and taps "Консультация" to open Telegram.
+FIRST VIEWPORT: a ruled list at display scale. Four lines strike themselves out (Касса, Склад, Учёт продаж, Отчёты); two stay, marked with the ring (Тетрадь долгов, Список закупок). Right of it on desktop, below on phones: the one-line offer and the Telegram button.
+FORM: grounded candidate 7 of 7, the refusal manifesto, own staging (sequential strike-out), seed ec81b631.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;800&display=swap">
+<style>
+:root {
+  --bg: #FAFAFA; --s1: #F2F2F2; --s2: #E6E6E6; --s3: #CFCFCF; --mute: #656565; --ink: #111111;
+  --on-ink: #FAFAFA; --on-ink-mute: #CFCFCF; --accent: #A6C23F; --frame: #0E0E0E; --frame-edge: transparent;
+  --font: "Onest", "Segoe UI", Roboto, system-ui, sans-serif;
+  --gutter: clamp(16px, 4vw, 40px);
+  --ease: cubic-bezier(.16, 1, .3, 1);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111111; --s1: #1A1A1A; --s2: #262626; --s3: #3A3A3A; --mute: #A3A3A3; --ink: #F2F2F2;
+  --on-ink: #111111; --on-ink-mute: #656565; --accent: #B8D454; --frame: #000000; --frame-edge: #3A3A3A; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #111111; --s1: #1A1A1A; --s2: #262626; --s3: #3A3A3A; --mute: #A3A3A3; --ink: #F2F2F2;
+  --on-ink: #111111; --on-ink-mute: #656565; --accent: #B8D454; --frame: #000000; --frame-edge: #3A3A3A; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 17px; line-height: 1.5; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+a { color: inherit; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+h1, h2, h3, p, ul, ol, figure { margin: 0; }
+h1, h2 { text-wrap: balance; }
+.num { font-variant-numeric: tabular-nums; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: var(--gutter); }
+
+/* ---------- Top bar ---------- */
+.top { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--s2); }
+.top .wrap { height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.mark { font-weight: 800; font-size: 20px; letter-spacing: -0.03em; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; }
+.mark .ring { width: 12px; height: 12px; }
+.top .acts { display: flex; align-items: center; gap: 8px; }
+
+/* ---------- Buttons ---------- */
+.btn { height: 52px; border-radius: 14px; padding: 0 22px; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-size: 17px; font-weight: 500; text-decoration: none; border: 1px solid transparent; transition: transform .1s, background .15s, color .15s; white-space: nowrap; }
+.btn:active { transform: scale(.98); }
+.btn.primary { background: var(--ink); color: var(--on-ink); }
+.btn.primary:hover { background: color-mix(in srgb, var(--ink) 86%, var(--bg)); }
+.btn.small { height: 40px; padding: 0 16px; font-size: 15px; border-radius: 12px; }
+.btn.icon { width: 40px; padding: 0; border-color: var(--s3); }
+.btn.icon:hover { background: var(--s1); }
+.btn.invert { background: var(--on-ink); color: var(--ink); }
+.btn.invert:hover { background: var(--s2); }
+.btn svg { flex: none; }
+.ring { display: inline-block; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--accent); flex: none; }
+
+/* ---------- Hero ---------- */
+.hero { padding-block: clamp(32px, 6vw, 80px) clamp(56px, 8vw, 112px); }
+.hero .wrap { display: grid; gap: clamp(32px, 5vw, 64px); }
+@media (min-width: 900px) { .hero .wrap { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: end; } }
+.book { list-style: none; padding: 0; border-top: 1px solid var(--s3); }
+.book li { display: flex; align-items: center; gap: .3em; padding: .14em 0 .12em; border-bottom: 1px solid var(--s2);
+  font-size: clamp(2.1rem, 7.2vw, 4rem); font-weight: 800; letter-spacing: -0.035em; line-height: 1.05; }
+.book .ring { width: .28em; height: .28em; border-width: .045em; margin-right: .12em; }
+/* The strike is a background so it draws per line fragment if a word ever wraps. */
+.book s { text-decoration: none; color: var(--ink); padding-inline: .04em; margin-inline: -.04em;
+  background: linear-gradient(var(--ink), var(--ink)) no-repeat 0 54% / 0% .075em; -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  animation: strike .55s var(--ease) forwards, dim .5s var(--ease) forwards; animation-delay: var(--d); }
+.book li:nth-child(1) s { --d: .35s; } .book li:nth-child(2) s { --d: .75s; } .book li:nth-child(3) s { --d: 1.15s; } .book li:nth-child(4) s { --d: 1.55s; }
+.book .yes { opacity: 0; transform: translateY(6px); animation: appear .7s var(--ease) forwards; }
+.book li:nth-child(5) { animation-delay: 2.1s; } .book li:nth-child(6) { animation-delay: 2.3s; }
+@keyframes strike { to { background-size: 100% .075em; } }
+@keyframes dim { to { color: var(--mute); } }
+@keyframes appear { to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .book s, .book .yes { animation: none; }
+  .book s { color: var(--mute); background-size: 100% .075em; } .book .yes { opacity: 1; transform: none; }
+}
+.offer { display: grid; gap: 20px; }
+.offer h1 { font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
+.offer p { color: var(--mute); max-width: 36ch; }
+.offer .btn { justify-self: start; }
+
+/* ---------- Sections ---------- */
+.sec { border-top: 1px solid var(--s2); padding-block: clamp(56px, 9vw, 120px); }
+.sec h2 { font-size: clamp(1.9rem, 4.2vw, 3rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08; }
+.sec .sub { color: var(--mute); margin-top: 14px; font-size: clamp(1.05rem, 1.4vw, 1.2rem); max-width: 40ch; }
+.split { display: grid; gap: clamp(32px, 5vw, 64px); }
+@media (min-width: 900px) {
+  .split { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; }
+  .split.flip { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+  .split.flip > :first-child { order: 2; }
+}
+.points { list-style: none; padding: 0; margin-top: 32px; display: grid; gap: 14px; max-width: 46ch; }
+.points li { position: relative; padding-left: 28px; }
+.points li::before { content: ""; position: absolute; left: 0; top: .5em; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--accent); }
+
+/* ---------- Phones ---------- */
+.shelf { display: flex; gap: clamp(16px, 2.5vw, 28px); overflow-x: auto; scroll-snap-type: x mandatory; padding: 8px var(--gutter) 20px; margin-inline: calc(-1 * var(--gutter)); scrollbar-width: none; }
+.shelf::-webkit-scrollbar { display: none; }
+.shelf figure { flex: 0 0 min(70vw, 272px); scroll-snap-align: center; display: grid; gap: 14px; }
+@media (min-width: 900px) { .shelf { overflow: visible; padding-inline: 0; margin-inline: 0; } .shelf figure { flex: 1 1 0; min-width: 0; max-width: 272px; } }
+.frame { aspect-ratio: 370 / 800; padding: 9px; border-radius: 46px; background: var(--frame);
+  box-shadow: 0 0 0 1px var(--frame-edge), 0 30px 60px -28px rgba(0,0,0,.45), 0 2px 6px rgba(0,0,0,.14); }
+.frame img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 38px; background: #FAFAFA; }
+.shelf figcaption { font-size: 14px; color: var(--mute); padding-inline: 6px; }
+
+/* ---------- Roles ---------- */
+.roles { margin-top: 36px; border-top: 1px solid var(--s3); }
+.roles > div { display: grid; gap: 6px 24px; padding: 20px 0; border-bottom: 1px solid var(--s2); }
+@media (min-width: 640px) { .roles > div { grid-template-columns: 9rem minmax(0, 1fr); } }
+.roles b { font-weight: 600; }
+.roles p { color: var(--mute); }
+
+/* ---------- Offline ---------- */
+.quiet .wrap { display: grid; gap: 24px; }
+@media (min-width: 900px) { .quiet .wrap { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center; } }
+.quiet p { color: var(--mute); max-width: 48ch; font-size: clamp(1.05rem, 1.4vw, 1.2rem); }
+
+/* ---------- Not here ---------- */
+.not .wrap { display: grid; gap: 28px; }
+@media (min-width: 900px) { .not .wrap { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; } }
+.nots { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 0 32px; border-top: 1px solid var(--s3); }
+.nots li { padding: 14px 0; border-bottom: 1px solid var(--s2); font-size: clamp(1.1rem, 1.6vw, 1.35rem); font-weight: 500; color: var(--mute); }
+/* The hero's strike returns here, static and at list scale. */
+.nots s { text-decoration: line-through; text-decoration-thickness: .08em; text-decoration-color: var(--ink); }
+.not .after { color: var(--ink); font-size: clamp(1.05rem, 1.4vw, 1.2rem); max-width: 44ch; margin-top: 8px; }
+
+/* ---------- Close ---------- */
+.close { background: var(--ink); color: var(--on-ink); padding-block: clamp(64px, 10vw, 140px); }
+.close .wrap { display: grid; gap: 28px; justify-items: start; }
+.close h2 { font-size: clamp(2.1rem, 6vw, 4.5rem); font-weight: 800; letter-spacing: -0.035em; line-height: 1.02; max-width: 16ch; }
+.close p { color: var(--on-ink-mute); max-width: 44ch; font-size: clamp(1.05rem, 1.4vw, 1.2rem); }
+.close .handle { font-size: 15px; color: var(--on-ink-mute); }
+.close .handle b { color: var(--on-ink); font-weight: 500; }
+
+/* ---------- Footer ---------- */
+footer { border-top: 1px solid var(--s2); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-block: 24px; font-size: 14px; color: var(--mute); }
+</style>
+<script>
+// Runs before first paint so a saved choice never flashes the other theme.
+try {
+  var saved = localStorage.getItem("theme");
+  if (saved === "light" || saved === "dark") document.documentElement.setAttribute("data-theme", saved);
+} catch (e) { /* storage blocked: follow the system theme */ }
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#top"><span class="ring" aria-hidden="true"></span>Shoppy</a>
+    <div class="acts">
+      <button class="btn small icon" type="button" id="theme" aria-label="Тёмная тема" aria-pressed="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg>
+      </button>
+      <a class="btn primary small" href="https://t.me/znematov">Консультация</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero" aria-labelledby="offer">
+  <div class="wrap">
+    <ol class="book" aria-label="Что есть в Shoppy, а чего нет">
+      <li class="no"><span class="sr">нет: </span><s>Касса</s></li>
+      <li class="no"><span class="sr">нет: </span><s>Склад</s></li>
+      <li class="no"><span class="sr">нет: </span><s>Учёт продаж</s></li>
+      <li class="no"><span class="sr">нет: </span><s>Отчёты</s></li>
+      <li class="yes"><span class="sr">есть: </span><span class="ring" aria-hidden="true"></span>Тетрадь долгов</li>
+      <li class="yes"><span class="sr">есть: </span><span class="ring" aria-hidden="true"></span>Список закупок</li>
+    </ol>
+    <div class="offer">
+      <h1 id="offer">Две тетради вашего магазина — в телефоне. И больше ничего.</h1>
+      <p>Shoppy — приложение для небольшого магазина. Открывается в браузере телефона. В нём только то, что раньше писали на бумаге: кто сколько должен и что купить завтра.</p>
+      <a class="btn primary" href="https://t.me/znematov">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4Z"/></svg>
+        Консультация в Telegram
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="debts">
+  <div class="wrap split">
+    <div>
+      <h2 id="debts">«Сколько я должен?»</h2>
+      <p class="sub">Ответ — пока покупатель ещё стоит у прилавка.</p>
+      <ul class="points">
+        <li>Продавец записывает долг и оплату за несколько нажатий. Покупатель не ждёт.</li>
+        <li>Остаток считается сам, из записей. Ничего не нужно пересчитывать.</li>
+        <li>Срок по умолчанию — 30 дней. Кто просрочил, видно сразу.</li>
+        <li>Удалить запись может только хозяин. Ошибку исправляют, а не стирают.</li>
+      </ul>
+    </div>
+    <div class="shelf">
+      <figure>
+        <div class="frame"><img src="img/seller-customer.webp" width="370" height="800" fetchpriority="high" alt="Экран продавца: карточка покупателя, крупно остаток долга и история записей"></div>
+        <figcaption>Карточка покупателя. Остаток — крупно.</figcaption>
+      </figure>
+      <figure>
+        <div class="frame"><img src="img/seller-debt.webp" width="370" height="800" alt="Экран продавца: запись нового долга, большое поле для суммы" loading="lazy"></div>
+        <figcaption>Новый долг: сумма, что взял, срок.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="list">
+  <div class="wrap split flip">
+    <div>
+      <h2 id="list">«Что купить завтра?»</h2>
+      <p class="sub">Один список на весь магазин. Никто не пишет одно и то же дважды.</p>
+      <ul class="points">
+        <li>За день продавец добавляет в список то, что кончилось.</li>
+        <li>Вечером список закрывают — продавец или хозяин. После этого добавить уже нельзя.</li>
+        <li>Закупщик видит закрытый список на базаре, отмечает купленное и цену.</li>
+        <li>Список идёт только вперёд: открыт → закрыт → куплен.</li>
+      </ul>
+    </div>
+    <div class="shelf">
+      <figure>
+        <div class="frame"><img src="img/seller-list.webp" width="370" height="800" alt="Экран продавца: сегодняшний список закупок и кнопка «Закрыть список»" loading="lazy"></div>
+        <figcaption>Список у продавца, пока день идёт.</figcaption>
+      </figure>
+      <figure>
+        <div class="frame"><img src="img/buyer-list.webp" width="370" height="800" alt="Экран закупщика: закрытый список, отметки о покупке и цены" loading="lazy"></div>
+        <figcaption>Тот же список у закупщика на базаре.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="people">
+  <div class="wrap split">
+    <div>
+      <h2 id="people">Три человека, один магазин</h2>
+      <p class="sub">Каждый видит своё. Данные общие.</p>
+      <div class="roles">
+        <div><b>Продавец</b><p>Пишет долги и оплаты. Добавляет в список закупок и может его закрыть.</p></div>
+        <div><b>Закупщик</b><p>Видит только закрытый список. Долги покупателей ему не показываются.</p></div>
+        <div><b>Хозяин</b><p>Видит всё. Добавляет сотрудников и задаёт им PIN для входа. Исправляет записи. Может закрыть список.</p></div>
+      </div>
+    </div>
+    <div class="shelf">
+      <figure>
+        <div class="frame"><img src="img/owner-customers.webp" width="370" height="800" alt="Экран хозяина: все покупатели с долгами и просрочкой" loading="lazy"></div>
+        <figcaption>Хозяин: все долги магазина на одном экране.</figcaption>
+      </figure>
+      <figure>
+        <div class="frame"><img src="img/owner-people.webp" width="370" height="800" alt="Экран хозяина: сотрудники магазина и их роли" loading="lazy"></div>
+        <figcaption>Сотрудники: кто продавец, кто закупщик.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec quiet" aria-labelledby="offline">
+  <div class="wrap">
+    <div>
+      <h2 id="offline">Без интернета тоже работает</h2>
+      <p class="sub">Связи нет — это обычный день, а не ошибка.</p>
+    </div>
+    <p>Записи сохраняются на телефоне и отправляются, когда появится связь. Сколько записей ждёт отправки, видно прямо на экране. Закупщик на базаре с плохим сигналом отмечает покупки так же, как и с хорошим.</p>
+  </div>
+</section>
+
+<section class="sec not" aria-labelledby="nothere">
+  <div class="wrap">
+    <div>
+      <h2 id="nothere">Чего здесь нет</h2>
+      <p class="after">Если магазину нужно что-то из этого списка, Shoppy не подойдёт. Если нужно избавиться от двух тетрадей — подойдёт.</p>
+    </div>
+    <ul class="nots">
+      <li><s>Склада и остатков</s></li>
+      <li><s>Кассы и чеков</s></li>
+      <li><s>Учёта каждой продажи</s></li>
+      <li><s>Отчётов</s></li>
+      <li><s>Штрихкодов</s></li>
+      <li><s>Каталога товаров</s></li>
+      <li><s>Поставщиков</s></li>
+      <li><s>Напоминаний по SMS</s></li>
+    </ul>
+  </div>
+</section>
+
+<section class="close" aria-labelledby="cta">
+  <div class="wrap">
+    <h2 id="cta">Расскажите про свой магазин</h2>
+    <p>Напишите в Telegram: сколько продавцов, кто ходит на базар, как сейчас ведёте долги. Разберём, подойдёт ли Shoppy именно вам.</p>
+    <a class="btn invert" href="https://t.me/znematov">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4Z"/></svg>
+      Консультация
+    </a>
+    <p class="handle">Telegram · <b>@znematov</b></p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Shoppy · Таджикистан · суммы в сомони</span>
+    <span>Имена, номера и суммы на экранах вымышленные.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var button = document.getElementById("theme");
+  // With no saved choice the page follows the system, so the state is read from what is shown.
+  function isDark() {
+    var chosen = root.getAttribute("data-theme");
+    return chosen ? chosen === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  }
+  function showState() { button.setAttribute("aria-pressed", isDark()); }
+  function toggleTheme() {
+    var next = isDark() ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("theme", next); } catch (e) { /* storage blocked: the choice lasts for this visit */ }
+    showState();
+  }
+  button.addEventListener("click", toggleTheme);
+  showState();
+})();
+</script>
+
+</body>
+</html>
